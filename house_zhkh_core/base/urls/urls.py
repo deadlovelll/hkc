@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b82e2e69e1c195b219efb9b90a318749b2482c2f4131dcac93c1ddc9a79d0bed
-size 305
+from django.urls import path
+
+from house_zhkh.base.views.views import CalculatePaymentsView, TaskStatusView
+
+urlpatterns = [
+    path('calculate_payments/', CalculatePaymentsView.as_view(), name='calculate_payments'),
+    path('task_status/<str:task_id>/', TaskStatusView.as_view(), name='task_status'),
+]

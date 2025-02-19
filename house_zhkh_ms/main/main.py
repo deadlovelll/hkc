@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de6ca664eb377a947c35b7ecdaee127f238676469083842a8ddce041dcc393f2
-size 245
+import uvicorn
+
+from house_zhkh_ms.app.app import create_app
+from house_zhkh_ms.config.config import Config
+
+app = create_app()
+
+if __name__ == "__main__":
+    uvicorn.run (
+        app, 
+        host=Config.HOST, 
+        port=Config.PORT
+    )

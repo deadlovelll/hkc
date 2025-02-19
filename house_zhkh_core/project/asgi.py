@@ -1,3 +1,16 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5ea8697c40dd2cbff55f8ab66712bb09fc6e5049179eef95be860e99fbcb9f73
-size 390
+"""
+ASGI config for project project.
+
+It exposes the ASGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/5.0/howto/deployment/asgi/
+"""
+
+import os
+
+from django.core.asgi import get_asgi_application
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
+
+application = get_asgi_application()

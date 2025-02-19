@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fd60115f8d098664319eb8847706d9f43023097f0cb0766f15ec737a3cc6f23a
-size 248
+import os
+from house_zhkh.base.celery.celery import Celery
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
+
+app = Celery('myproject')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()

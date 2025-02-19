@@ -1,3 +1,8 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b3bfdefe1e728d54df4e0fe33ef08759ed65c58e0c4560d77acd469f877865f0
-size 289
+import os
+
+class Config:
+    HOST: str = os.getenv("HOST", "127.0.0.1")
+    PORT: int = int(os.getenv("PORT", 8140))
+    TITLE: str = os.getenv("TITLE", "House API")
+    DESCRIPTION: str = os.getenv("DESCRIPTION", "API for managing houses")
+    VERSION: str = os.getenv("VERSION", "1.0.0")
