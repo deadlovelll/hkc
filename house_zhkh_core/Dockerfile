@@ -15,6 +15,8 @@ RUN python -m venv venv && ./venv/bin/pip install --no-cache-dir -r requirements
 
 COPY . .
 
+ENV DJANGO_SETTINGS_MODULE=project.settings
+
 EXPOSE 8000
 
-CMD ["./venv/bin/uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["./venv/bin/gunicorn", "--bind", "0.0.0.0:8000", "project.wsgi:application"]

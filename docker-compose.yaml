@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+    django:
+      image: zhkh_django
+      build: 
+        context: .
+        dockerfile: ./app/house_zhkh_core/Dockerfile
+      depends_on:
+        - db
+
+    fastapi:
+      image: zhkh_fastapi
+      build: 
+        context: .
+        dockerfile: ./app/house_zhkh_core/Dockerfile
+      depends_on:
+        - db
+
+    db:
+      image: postgres15
+      container_name: postgres_db
+      restart: always
+      env_file:
+        - .env
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+        - "5432:5432"
+
+    redis:build: path
+    
+    celery:build: path
+
+    flower:build: path
+
+    elk:build: path
+
+volumes:
+  postgres_data:
