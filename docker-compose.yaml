@@ -28,11 +28,35 @@ services:
       ports:
         - "5432:5432"
 
-    redis:build: path
-    
-    celery:build: path
+    redis:
+      image: redis:alpine
+      container_name: redis_broker
+      restart: always
+      ports:
+        - "6379:6379"
 
-    flower:build: path
+    celery:
+      build: .
+      container_name: celery_worker
+      restart: always
+      depends_on:
+        - redis
+      env_file:
+        - .env
+      command: ["./venv/bin/celery", "-A", "tasks", "worker", "--loglevel=info"]
+
+    flower:
+      image: mher/flower
+      container_name: celery_flower
+      restart: always
+      depends_on:
+        - redis
+        - celery
+      env_file:
+        - .env
+      ports:
+        - "5555:5555"
+      command: ["flower", "--broker=redis://redis:6379/0"]
 
     elk:build: path
 
