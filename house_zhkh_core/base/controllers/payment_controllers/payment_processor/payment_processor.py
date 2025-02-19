@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from house_zhkh.base.models.models import Flat, Payment
-from house_zhkh.base.controllers.payment_controllers.payment_calculator.payment_calculator import PaymentCalculator
+from base.models.models import Flat, Payment
+from base.controllers.payment_controllers.payment_calculator.payment_calculator import PaymentCalculator
 
 class PaymentProcessor:
     

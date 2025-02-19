@@ -19,4 +19,4 @@ ENV DJANGO_SETTINGS_MODULE=project.settings
 
 EXPOSE 8000
 
-CMD ["./venv/bin/gunicorn", "--bind", "0.0.0.0:8000", "project.wsgi:application"]
+CMD ["./venv/bin/python3", "manage.py", "runserver", "0.0.0.0:8000"]

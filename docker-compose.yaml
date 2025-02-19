@@ -1,64 +1,114 @@
-version: '3.3'
+version: '3.8'
 
 services:
-    django:
-      image: zhkh_django
-      build: 
-        context: .
-        dockerfile: ./app/house_zhkh_core/Dockerfile
-      depends_on:
-        - db
+  django:
+    image: zhkh_django
+    build: 
+      context: ./house_zhkh_core
+      dockerfile: Dockerfile.django
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+      - kibana
+      - logstash
+      # - celery
+    #   - flower
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
 
-    fastapi:
-      image: zhkh_fastapi
-      build: 
-        context: .
-        dockerfile: ./app/house_zhkh_core/Dockerfile
-      depends_on:
-        - db
+  fastapi:
+    image: zhkh_fastapi
+    build: 
+      context: ./house_zhkh_ms
+      dockerfile: Dockerfile.fastapi
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+      - kibana
+      - logstash
+      # - celery
+    #   - flower
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
 
-    db:
-      image: postgres15
-      container_name: postgres_db
-      restart: always
-      env_file:
-        - .env
-      volumes:
-        - postgres_data:/var/lib/postgresql/data
-      ports:
-        - "5432:5432"
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
-    redis:
-      image: redis:alpine
-      container_name: redis_broker
-      restart: always
-      ports:
-        - "6379:6379"
+  redis:
+    image: redis:alpine
+    container_name: redis_broker
+    restart: always
+    ports:
+      - "6379:6379"
 
-    celery:
-      build: .
-      container_name: celery_worker
-      restart: always
-      depends_on:
-        - redis
-      env_file:
-        - .env
-      command: ["./venv/bin/celery", "-A", "tasks", "worker", "--loglevel=info"]
+  # celery:
+  #   image: zhkh_django  
+  #   container_name: celery_worker
+  #   restart: always
+  #   depends_on:
+  #     - redis
+  #   env_file:
+  #     - .env
+  #   command: ["./venv/bin/celery", "-A", "house_zhkh_core.project.celery worker", "worker", "--loglevel=info"]
 
-    flower:
-      image: mher/flower
-      container_name: celery_flower
-      restart: always
-      depends_on:
-        - redis
-        - celery
-      env_file:
-        - .env
-      ports:
-        - "5555:5555"
-      command: ["flower", "--broker=redis://redis:6379/0"]
+  # flower:
+  #   image: mher/flower
+  #   container_name: celery_flower
+  #   restart: always
+  #   depends_on:
+  #     - redis
+  #     - celery
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "5555:5555"
+  #   command: ["flower", "--broker=redis://redis:6379/0"]
 
-    elk:build: path
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - ELASTIC_PASSWORD=changeme 
+    ports:
+      - "9200:9200"
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.6.2
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    ports:
+      - "5044:5044"
+      - "5001:5001"
+      - "9600:9600"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.6.2
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
 
 volumes:
   postgres_data:

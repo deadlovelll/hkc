@@ -7,9 +7,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from house_zhkh.base.celery.tasks import calculate_payments
-from house_zhkh.base.controllers.payment_controllers.payment_processor.payment_processor import PaymentProcessor
-from house_zhkh.base.models.models import Payment
+from base.tasks import CalculatePaymentsTask
+from base.controllers.payment_controllers.payment_processor.payment_processor import PaymentProcessor
+from base.models.models import Payment
 
 class PaymentCalculationView(APIView):
     
@@ -43,7 +43,7 @@ class PaymentCalculationView(APIView):
         if not month:
             return Response (
                 {
-                    'error': 'Month is required'
+                    'ERROR': 'Month is required'
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -61,9 +61,9 @@ class PaymentCalculationView(APIView):
 
             return Response (
                 {
-                    'status': 'success',
-                    'message': 'Payments calculated successfully.',
-                    'created_payments': len(created_payments),
+                    'STATUS': 'success',
+                    'MESSAGE': 'Payments calculated successfully.',
+                    'CREATED_PAYMENTS': len(created_payments),
                 },
                 status=status.HTTP_201_CREATED,
             )
@@ -71,7 +71,7 @@ class PaymentCalculationView(APIView):
         except Exception as e:
             return Response (
                 {
-                    'error': str(e)
+                    'ERROR': str(e)
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -85,11 +85,11 @@ class CalculatePaymentsView(APIView):
     ) -> Response:
         
         month: str = request.data.get("month")
-        task = calculate_payments.delay(month)
+        task = CalculatePaymentsTask.delay(month)
         
         return Response (
             {
-                'task_id': task.id
+                'TASK_ID': task.id
             }, 
             status=status.HTTP_202_ACCEPTED
         )
@@ -106,14 +106,14 @@ class TaskStatusView(APIView):
         task_result = AsyncResult(task_id)
 
         response: Dict[str, Any] = {
-            "state": task_result.state,
-            "current": task_result.info.get("current", 0)
+            "STATE": task_result.state,
+            "CURRENT": task_result.info.get("current", 0)
             if task_result.state != "PENDING"
             else 0,
-            "total": task_result.info.get("total", 1)
+            "TOTAL": task_result.info.get("total", 1)
             if task_result.state != "PENDING"
             else 1,
-            "result": task_result.result if task_result.state != "PENDING" else None,
+            "RESULT": task_result.result if task_result.state != "PENDING" else None,
         }
 
         return Response(response)

@@ -1,52 +1,8 @@
 from django.utils import timezone
 from celery import Task, shared_task
-from house_zhkh.base.models.models import Flat, Payment
 
-class PaymentCalculator:
-    
-    """
-    Responsible for calculating payment amounts for a given flat.
-    """
-    
-    def __init__ (
-        self
-    ) -> None:
-        
-        self.water_rate = 10  
-        self.maintenance_rate = 5
-
-    def calculate_for_flat (
-        self, 
-        flat
-    ) -> dict:
-        
-        """
-        Calculates water fee, common area fee, and total fee for a given flat.
-
-        Args:
-            flat (Flat): The flat for which to calculate the payment.
-
-        Returns:
-            dict: A dictionary with the calculated fees.
-        """
-        
-        water_usage = 0.0
-        # Assuming that the related name for counters in Flat is `counters`
-        for counter in flat.counters.all():
-            if counter.last_reading is not None and counter.current_reading is not None:
-                monthly_usage = counter.current_reading - counter.last_reading
-                water_usage += monthly_usage
-
-        water_fee = water_usage * self.WATER_RATE
-        common_area_fee = flat.square * self.MAINTENANCE_RATE
-        total_fee = water_fee + common_area_fee
-
-        return {
-            'water_fee': water_fee,
-            'common_area_fee': common_area_fee,
-            'total_fee': total_fee,
-        }
-
+from base.models.models import Flat, Payment
+from base.controllers.payment_controllers.payment_calculator.payment_calculator import PaymentCalculator
 
 @shared_task(bind=True, name="calculate_payments", base=Task)
 class CalculatePaymentsTask(Task):

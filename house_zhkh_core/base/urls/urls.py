@@ -1,6 +1,6 @@
 from django.urls import path
 
-from house_zhkh.base.views.views import CalculatePaymentsView, TaskStatusView
+from base.views.views import CalculatePaymentsView, TaskStatusView
 
 urlpatterns = [
     path('calculate_payments/', CalculatePaymentsView.as_view(), name='calculate_payments'),

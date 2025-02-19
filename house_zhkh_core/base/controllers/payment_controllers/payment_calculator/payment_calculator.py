@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from house_zhkh.base.models.models import Flat, WaterMeter
+from base.models.models import Flat, WaterMeter
 
 class PaymentCalculator:
     
@@ -11,7 +11,7 @@ class PaymentCalculator:
     def __init__ (
         self, 
         water_rate: float, 
-        common_area_rate: float
+        common_area_rate: float,
     ) -> None:
         
         self.water_rate = water_rate
@@ -21,7 +21,7 @@ class PaymentCalculator:
         self, 
         apartment: Flat, 
         month_date: datetime, 
-        prev_month_date: datetime
+        prev_month_date: datetime,
     ) -> dict:
         
         """
