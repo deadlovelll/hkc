@@ -9,10 +9,10 @@ services:
     depends_on:
       - db
       - redis
-      - elasticsearch
-      - kibana
-      - logstash
-      # - celery
+      # - elasticsearch
+      # - kibana
+      # - logstash
+      - celery
     #   - flower
     env_file:
       - .env
@@ -27,10 +27,10 @@ services:
     depends_on:
       - db
       - redis
-      - elasticsearch
-      - kibana
-      - logstash
-      # - celery
+      # - elasticsearch
+      # - kibana
+      # - logstash
+      - celery
     #   - flower
     env_file:
       - .env
@@ -55,15 +55,15 @@ services:
     ports:
       - "6379:6379"
 
-  # celery:
-  #   image: zhkh_django  
-  #   container_name: celery_worker
-  #   restart: always
-  #   depends_on:
-  #     - redis
-  #   env_file:
-  #     - .env
-  #   command: ["./venv/bin/celery", "-A", "house_zhkh_core.project.celery worker", "worker", "--loglevel=info"]
+  celery:
+    image: zhkh_django  
+    container_name: celery_worker
+    restart: always
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    command: ["./venv/bin/celery", "-A", "project", "worker", "--loglevel=info"]
 
   # flower:
   #   image: mher/flower
@@ -78,37 +78,37 @@ services:
   #     - "5555:5555"
   #   command: ["flower", "--broker=redis://redis:6379/0"]
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - ES_JAVA_OPTS=-Xms512m -Xmx512m
-      - ELASTIC_PASSWORD=changeme 
-    ports:
-      - "9200:9200"
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+  #   container_name: elasticsearch
+  #   environment:
+  #     - discovery.type=single-node
+  #     - ES_JAVA_OPTS=-Xms512m -Xmx512m
+  #     - ELASTIC_PASSWORD=changeme 
+  #   ports:
+  #     - "9200:9200"
 
-  logstash:
-    image: docker.elastic.co/logstash/logstash:8.6.2
-    container_name: logstash
-    depends_on:
-      - elasticsearch
-    volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    ports:
-      - "5044:5044"
-      - "5001:5001"
-      - "9600:9600"
+  # logstash:
+  #   image: docker.elastic.co/logstash/logstash:8.6.2
+  #   container_name: logstash
+  #   depends_on:
+  #     - elasticsearch
+  #   volumes:
+  #     - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #   ports:
+  #     - "5044:5044"
+  #     - "5001:5001"
+  #     - "9600:9600"
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:8.6.2
-    container_name: kibana
-    depends_on:
-      - elasticsearch
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-    ports:
-      - "5601:5601"
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.6.2
+  #   container_name: kibana
+  #   depends_on:
+  #     - elasticsearch
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #   ports:
+  #     - "5601:5601"
 
 volumes:
   postgres_data:
