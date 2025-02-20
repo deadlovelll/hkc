@@ -11,9 +11,10 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --no-cache-dir --upgrade pip virtualenv
 
 COPY requirements.txt .
+
 RUN python -m venv venv && ./venv/bin/pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY house_zhkh_core/ .
 
 ENV DJANGO_SETTINGS_MODULE=project.settings.settings
 

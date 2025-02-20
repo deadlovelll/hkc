@@ -4,8 +4,8 @@ services:
   django:
     image: zhkh_django
     build: 
-      context: ./house_zhkh_core
-      dockerfile: Dockerfile.django
+      context: .
+      dockerfile: house_zhkh_core/Dockerfile.django
     depends_on:
       - db
       - redis
@@ -22,8 +22,8 @@ services:
   fastapi:
     image: zhkh_fastapi
     build: 
-      context: ./house_zhkh_ms
-      dockerfile: Dockerfile.fastapi
+      context: .
+      dockerfile: house_zhkh_ms/Dockerfile.fastapi
     depends_on:
       - db
       - redis
