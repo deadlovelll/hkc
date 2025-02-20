@@ -1,8 +1,11 @@
 from django.utils import timezone
 from celery import Task, shared_task
 
-from base.models.models import Flat, Payment
-from base.controllers.payment_controllers.payment_calculator.payment_calculator import PaymentCalculator
+from base.models.flat import Flat
+from base.models.payment import Payment
+from base.controllers.payment_controllers.payment_calculator.payment_calculator import (
+    PaymentCalculator,
+)
 
 @shared_task(bind=True, name="calculate_payments", base=Task)
 class CalculatePaymentsTask(Task):
@@ -13,7 +16,7 @@ class CalculatePaymentsTask(Task):
 
     def run (
         self, 
-        month
+        month,
     ) -> dict:
         
         """
@@ -31,7 +34,6 @@ class CalculatePaymentsTask(Task):
         except ValueError as exc:
             raise ValueError("Invalid month format. Expected 'YYYY-MM-01'.") from exc
 
-        # Calculate the end of the month by adding 31 days then rolling back to the last day.
         month_end = month_start + timezone.timedelta(days=31)
         month_end = month_end.replace(day=1) - timezone.timedelta(days=1)
 
@@ -44,11 +46,10 @@ class CalculatePaymentsTask(Task):
 
             Payment.objects.update_or_create (
                 flat=flat,
-                month=month_start.date(),  # Payment.month is a DateField
+                month=month_start.date(), 
                 defaults=payment_data
             )
 
-            # Update task state to report progress.
             self.update_state (
                 state='PROGRESS',
                 meta={'current': i, 'total': total_flats}

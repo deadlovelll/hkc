@@ -1,12 +1,9 @@
 from django.contrib import admin
-from house_zhkh.base.models.models import (
-    Building,
-    Flat,
-    Counter,
-    CounterHistory,
-    Inhabitant,
-)
 
+from base.models.building import Building
+from base.models.flat import Flat
+from base.models.counter import Counter, CounterHistory
+from base.models.inhabitant import Inhabitant
 
 @admin.register(Building)
 class BuildingAdmin(admin.ModelAdmin):
