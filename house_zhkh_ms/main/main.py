@@ -1,7 +1,7 @@
 import uvicorn
 
-from house_zhkh_ms.app.app import create_app
-from house_zhkh_ms.config.config import Config
+from app.app import create_app
+from config.config import Config
 
 app = create_app()
 

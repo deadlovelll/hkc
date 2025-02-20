@@ -8,10 +8,10 @@ from psycopg2 import (
     DataError
 )
 
-from house_zhkh_ms.modules.logger.logger import LoggerInitializer
-from house_zhkh_ms.modules.database.database_pool_controllers import DatabasePoolControllers
-from house_zhkh_ms.house_factory.house_factory import HouseFactory
-from house_zhkh_ms.controllers.base_controller.base_controller import BaseController
+from modules.logger.logger import LoggerInitializer
+from modules.database.database_pool_controllers import DatabasePoolControllers
+from house_factory.house_factory import HouseFactory
+from controllers.base_controller.base_controller import BaseController
 
 class HouseController(BaseController):
     

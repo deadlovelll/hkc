@@ -1,5 +1,5 @@
-from house_zhkh_ms.modules.database.database import Database
-from house_zhkh_ms.modules.logger.logger import LoggerInitializer
+from modules.database.database import Database
+from modules.logger.logger import LoggerInitializer
 
 class DatabasePoolControllers:
     

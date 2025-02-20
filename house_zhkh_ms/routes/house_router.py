@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_utils.cbv import cbv
-from controllers.house_controller import HouseController
+from controllers.house_controller.house_controller import HouseController
 from schemas.house_schema import HouseInfo, NewHouseRequest
 
 router = APIRouter(

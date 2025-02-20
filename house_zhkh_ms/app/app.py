@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from house_zhkh_ms.config.config import Config
+from config.config import Config
 from routes.house_router import router as house_router
 
 def create_app () -> FastAPI:
