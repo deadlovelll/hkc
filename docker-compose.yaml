@@ -3,82 +3,119 @@ version: '3.8'
 services:
   django:
     image: zhkh_django
-    build: 
+    build:
       context: .
       dockerfile: house_zhkh_core/Dockerfile.django
     depends_on:
-      - db
-      - redis
-      - elasticsearch
-      - kibana
-      - logstash
-      - celery
-      - flower
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+      celery:
+        condition: service_started
+      flower:
+        condition: service_started
     env_file:
       - .env
     ports:
       - "8000:8000"
+    networks:
+      - app-network
 
   fastapi:
     image: zhkh_fastapi
-    build: 
+    build:
       context: .
       dockerfile: house_zhkh_ms/Dockerfile.fastapi
     depends_on:
-      - db
-      - redis
-      - elasticsearch
-      - kibana
-      - logstash
-      - celery
-      - flower
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+      logstash:
+        condition: service_healthy
+      celery:
+        condition: service_started
+      flower:
+        condition: service_started
     env_file:
       - .env
     ports:
       - "8001:8001"
+    networks:
+      - app-network
 
   db:
     image: postgres:15
+    container_name: postgres_db
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-    container_name: postgres_db
-    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
 
   redis:
     image: redis:alpine
     container_name: redis_broker
-    restart: always
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - app-network
 
   celery:
     image: zhkh_django  
     container_name: celery_worker
     restart: always
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     env_file:
       - .env
     command: ["./venv/bin/celery", "-A", "project", "worker", "--loglevel=info"]
+    networks:
+      - app-network
 
   flower:
     image: mher/flower
     container_name: celery_flower
     restart: always
     depends_on:
-      - redis
-      - celery
+      redis:
+        condition: service_healthy
+      celery:
+        condition: service_started
     env_file:
       - .env
     ports:
       - "5555:5555"
     command: ["celery", "-A", "celery", "flower", "--broker=redis://redis:6379/0"]
+    networks:
+      - app-network
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
@@ -89,28 +126,45 @@ services:
       - ELASTIC_PASSWORD=changeme 
     ports:
       - "9200:9200"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200/_cluster/health | grep -q '\"status\":\"green\"'"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+    networks:
+      - app-network
 
   logstash:
     image: docker.elastic.co/logstash/logstash:8.6.2
     container_name: logstash
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     volumes:
       - ./config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     ports:
       - "5044:5044"
       - "5001:5001"
       - "9600:9600"
+    networks:
+      - app-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.6.2
     container_name: kibana
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - "5601:5601"
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
