@@ -78,20 +78,81 @@ DOCKER_BUILDKIT=0 docker compose up --build --force-recreate
 ## 🏗 Project Structure
 ```
 .
-├── base/
-│   ├── models/          # Django models (Flats, Payments, Counters, etc.)
-│   ├── controllers/     # Business logic
-│   ├── views/           # API views
-│   └── tasks.py         # Celery tasks
-├── config/              # Configuration files
-├── routes/              # FastAPI route handlers
-├── modules/
-│   ├── database/        # Database connections
-│   ├── logger/          # Logstash logging setup
-├── main.py              # FastAPI application entry point
-├── worker.py            # Celery worker entry point
-├── Dockerfile           # Docker build file
-└── README.md            # Project documentation
+├── README.md
+├── config
+│   └── logstash
+│       └── logstash.conf
+├── docker-compose.yaml
+├── docs
+│   ├── house_zhkh_core.md
+│   └── house_zhkh_ms.md
+├── house_zhkh_core
+│   ├── Dockerfile.django
+│   ├── base
+│   │   ├── admin
+│   │   │   └── admin.py
+│   │   ├── apps.py
+│   │   ├── controllers
+│   │   │   └── payment_controllers
+│   │   ├── models
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── building.py
+│   │   │   ├── counter.py
+│   │   │   ├── flat.py
+│   │   │   ├── inhabitant.py
+│   │   │   ├── payment.py
+│   │   │   └── water_meter.py
+│   │   ├── serializers
+│   │   │   └── serializers.py
+│   │   ├── tasks.py
+│   │   ├── tests
+│   │   │   └── tests.py
+│   │   ├── urls
+│   │   │   └── urls.py
+│   │   └── views
+│   │       └── views.py
+│   ├── manage.py
+│   └── project
+│       ├── __init__.py
+│       ├── asgi.py
+│       ├── celery.py
+│       ├── settings
+│       │   └── settings.py
+│       ├── urls
+│       │   └── urls.py
+│       └── wsgi.py
+├── house_zhkh_ms
+│   ├── Dockerfile.fastapi
+│   ├── app
+│   │   └── app.py
+│   ├── config
+│   │   └── config.py
+│   ├── controllers
+│   │   ├── base_controller
+│   │   │   └── base_controller.py
+│   │   └── house_controller
+│   │       └── house_controller.py
+│   ├── house_factory
+│   │   └── house_factory.py
+│   ├── main
+│   │   └── main.py
+│   ├── modules
+│   │   ├── database
+│   │   │   ├── database.py
+│   │   │   └── database_pool_controllers.py
+│   │   └── logger
+│   │       └── logger.py
+│   ├── routes
+│   │   └── house_router.py
+│   ├── schemas
+│   │   └── house_schema.py
+│   └── tests
+├── poetry.lock
+├── pyproject.toml
+├── requirements.txt
+├── tests
+│   └── run_tests.sh
 ```
 
 ## 🔥 Usage
