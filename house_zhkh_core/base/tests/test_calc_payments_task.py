@@ -28,9 +28,14 @@ class CalculatePaymentsTaskTest(TestCase):
             {'amount': 1200},
         ]
         
-        with patch('myapp.tasks.Flat.objects.all', return_value=flats), \
-             patch('myapp.tasks.Payment.objects.update_or_create') as mock_update_or_create, \
-             patch('myapp.tasks.PaymentCalculator', return_value=calculator_mock):
+        with patch('base.models.flat.Flat.objects.all', return_value=flats), \
+            patch (
+                'base.models.payment.Payment.objects.update_or_create',
+            ) as mock_update_or_create, \
+            patch (
+                'base.controller.payment_calculator.payment_calculator.PaymentCalculator', 
+                return_value=calculator_mock
+            ):
             
             task = CalculatePaymentsTask()
             result = task.run(month)
@@ -66,7 +71,7 @@ class CalculatePaymentsTaskTest(TestCase):
         task = CalculatePaymentsTask()
         with self.assertRaises (
             ValueError, 
-            msg="Invalid month format. Expected 'YYYY-MM-01'."
+            msg="Invalid month format. Expected 'YYYY-MM-01'.",
         ):
             task.run('invalid-date')
 
@@ -88,7 +93,7 @@ class CalculatePaymentsTaskTest(TestCase):
         
         self.assertEqual (
             result, 
-            {'status': 'completed', 'month': month}
+            {'status': 'completed', 'month': month},
         )
         mock_update_or_create.assert_not_called()
 
