@@ -4,6 +4,7 @@ from base.controllers.payment_controllers.payment_calculator.payment_calculator 
 from datetime import datetime
 
 class PaymentCalculatorTest(TestCase):
+    
     """
     Test suite for the PaymentCalculator class.
     """
@@ -34,7 +35,7 @@ class PaymentCalculatorTest(TestCase):
         current_reading = MagicMock(reading=200)
         previous_reading = MagicMock(reading=150)
         
-        with patch('myapp.calculations.WaterMeter.objects.filter') as mock_filter:
+        with patch('base.models.water_meter.WaterMeter.objects.filter') as mock_filter:
             mock_filter.side_effect = [[current_reading], [previous_reading]]
             result = self.calculator.calculate_fees (
                 self.apartment, 

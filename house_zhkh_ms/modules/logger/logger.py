@@ -42,7 +42,6 @@ class CustomLogstashFormatter(Formatter):
             "filename": record.filename,
             "line_number": record.lineno,
         }
-        # Return JSON output as bytes
         return json.dumps(log_record).encode("utf-8")
 
 
@@ -97,7 +96,6 @@ class LoggerInitializer:
         logger: Logger = logging.getLogger(self.logger_name)
         logger.setLevel(self.level)
 
-        # Avoid adding multiple handlers if already configured
         if not logger.handlers:
             logstash_handler = logstash.LogstashHandler(
                 host=self.logstash_host, 

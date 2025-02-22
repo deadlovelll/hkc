@@ -5,7 +5,7 @@ from psycopg2 import (
     IntegrityError, 
     InterfaceError, 
     ProgrammingError, 
-    DataError
+    DataError,
 )
 
 from modules.logger.logger import LoggerInitializer
@@ -22,8 +22,9 @@ class HouseController(BaseController):
         super().__init__()
         
         self.db = DatabasePoolControllers()
-        self.logger = LoggerInitializer.init_logger()
         self.house_factory = HouseFactory()
+        
+        self.logger = LoggerInitializer.init_logger()
 
     async def get (
         self, 
@@ -147,7 +148,7 @@ class HouseController(BaseController):
             return JSONResponse (
                 {
                     'STATUS': 'SUCCESS', 
-                    'HOUSE_ID': house_id
+                    'HOUSE_ID': house_id,
                 }
             )
 
@@ -166,6 +167,6 @@ class HouseController(BaseController):
             return JSONResponse (
                 {
                     'STATUS': 'FAILED', 
-                    'MESSAGE': 'Internal Server Error'
+                    'MESSAGE': 'Internal Server Error',
                 }
             )

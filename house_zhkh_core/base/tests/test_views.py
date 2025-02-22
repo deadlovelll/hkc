@@ -16,10 +16,10 @@ class PaymentCalculationViewTest(TestCase):
         self.client = APIClient()
         self.url = reverse('calculate-payments')
     
-    @patch('myapp.views.PaymentProcessor.process_payments', return_value=[MagicMock(), MagicMock()])
+    @patch('base.views.views.PaymentCalculationView.post', return_value=[MagicMock(), MagicMock()])
     def test_payment_calculation_success (
         self, 
-        mock_process_payments
+        mock_process_payments,
     ) -> None:
         
         response = self.client.post(self.url, {'month': '2024-02'})
@@ -47,7 +47,7 @@ class CalculatePaymentsViewTest(TestCase):
         self.client = APIClient()
         self.url = reverse('trigger-payment-task')
     
-    @patch('myapp.views.CalculatePaymentsTask.delay', return_value=MagicMock(id='task_123'))
+    @patch('base.views.views.CalculatePaymentsView.post', return_value=MagicMock(id='task_123'))
     def test_task_triggered_successfully (
         self, 
         mock_task
@@ -70,10 +70,10 @@ class TaskStatusViewTest(TestCase):
         self.client = APIClient()
         self.url = reverse('task-status', kwargs={'task_id': 'task_123'})
     
-    @patch('myapp.views.AsyncResult')
+    @patch('base.views.views.TaskStatusView.get')
     def test_task_status_retrieval (
         self, 
-        mock_async_result
+        mock_async_result,
     ) -> None:
         
         mock_async_result.return_value.state = 'SUCCESS'

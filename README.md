@@ -33,7 +33,7 @@ cd hkc
 python3 -m venv venv
 source venv/bin/activate
 ```
-
+---
 ```bash
 # Install requirements
 pip install -r requirements.txt
@@ -47,6 +47,7 @@ pip install poetry
 poetry install
 poetry shell
 ```
+---
 
 ```bash
 # Run the services
@@ -170,6 +171,17 @@ curl -X POST "http://localhost:8000/houses/new" -H "Content-Type: application/js
 ### 3️⃣ Start Payment Calculation
 ```bash
 curl -X POST "http://localhost:8000/payments/calculate" -H "accept: application/json"
+```
+
+## 🛠 Run Tests
+```bash
+# Run tests
+python3 -m venv venv
+source venv/bin/activate
+
+cd tests
+
+bash tests/run_tests.sh
 ```
 
 ## 🛠 Technologies

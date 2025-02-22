@@ -1,5 +1,9 @@
-from typing import Dict, Any, List, Tuple
-
+from typing import (
+    Dict, 
+    Any, 
+    List, 
+    Tuple
+)
 
 class HouseFactory:
     
@@ -153,7 +157,7 @@ class HouseFactory:
         return {
             "id": counter_history_id, 
             "date": date, 
-            "count": count
+            "count": count,
         }
 
     @staticmethod
@@ -181,6 +185,6 @@ class HouseFactory:
                 {
                     "id": inhabitant_id,
                     "full_name": full_name or f"Житель {inhabitant_id}",
-                    "age": age
+                    "age": age,
                 }
             )

@@ -15,7 +15,7 @@ class HouseRouter:
     @router.get("/info", response_model=HouseInfo)
     async def get_house_info(
         self, 
-        house_street: str
+        house_street: str,
     ) -> HouseInfo:
         
         """
@@ -39,7 +39,7 @@ class HouseRouter:
     @router.post("/new", response_model=HouseInfo, status_code=201)
     async def add_new_house(
         self, 
-        request: NewHouseRequest
+        request: NewHouseRequest,
     ) -> HouseInfo:
         
         """

@@ -75,7 +75,7 @@ class Database:
                 host=self.host,
                 user=self.db_user,
                 password=self.password,
-                database=self.database
+                database=self.database,
             )
     
     def get_connection (

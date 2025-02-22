@@ -1,6 +1,4 @@
 from django.test import TestCase
-
-from django.test import TestCase
 from unittest.mock import patch, MagicMock
 from django.utils import timezone
 from base.tasks import CalculatePaymentsTask
@@ -85,8 +83,8 @@ class CalculatePaymentsTaskTest(TestCase):
         
         month = '2024-02-01'
         
-        with patch('myapp.tasks.Flat.objects.all', return_value=[]), \
-             patch('myapp.tasks.Payment.objects.update_or_create') as mock_update_or_create:
+        with patch('base.models.flat.Flat.objects.all', return_value=[]), \
+             patch('base.models.payment.Payment.objects.update_or_create') as mock_update_or_create:
             
             task = CalculatePaymentsTask()
             result = task.run(month)
@@ -111,9 +109,9 @@ class CalculatePaymentsTaskTest(TestCase):
         calculator_mock = MagicMock()
         calculator_mock.calculate_for_flat.return_value = {'amount': 1000}
         
-        with patch('myapp.tasks.Flat.objects.all', return_value=flats), \
-             patch('myapp.tasks.Payment.objects.update_or_create'), \
-             patch('myapp.tasks.PaymentCalculator', return_value=calculator_mock), \
+        with patch('base.models.flat.Flat.objects.all', return_value=flats), \
+             patch('base.models.payment.Payment.objects.update_or_create'), \
+             patch('base.tasks.CalculatePaymentsTask', return_value=calculator_mock), \
              patch.object(CalculatePaymentsTask, 'update_state') as mock_update_state:
             
             task = CalculatePaymentsTask()
