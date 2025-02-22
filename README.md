@@ -19,6 +19,40 @@ House Management API is a FastAPI-based service for managing houses, flats, inha
 - Redis **7+**
 - Poetry **1.8+**
 
+### Setting up .env
+
+```
+ALLOWED_HOSTS=127.0.0.1,localhost,example.com
+DEBUG=True
+
+SECRET_KEY = "django-insecure-#b5u&uc0=i515s-%0wj94v%8=r1i_d+4bd*^rz8dmubw88v3e7"
+CELERY_BROKER_URL='redis://localhost:6379/0'
+
+DATABASE_ENGINE='django.db.backends.postgresql'
+DB_OPTIONS='-c search_path=public'
+POSTGRES_DB='mydb'
+POSTGRES_USER='myuser'
+POSTGRES_PASSWORD='mypassword'
+DB_HOST='db'
+DB_PORT='5432'
+DATABASE_URL=postgresql://myuser:mypassword@db:5432/mydatabase
+
+REDIS_URL=redis://redis:6379/0
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+LOGSTASH_HOST='localhost'
+LOGSTASH_PORT=5959
+
+FASTAPI_ALLOW_ORIGINS=*
+FASTAPI_ALLOW_CREDENTIALS=True
+FASTAPI_ALLOW_METHODS=*
+FASTAPI_ALLOW_HEADERS=*
+
+FASTAPI_HOST=127.0.0.1
+FASTAPI_PORT=8140
+```
+
 ### Setup
 
 #### Local Setup
