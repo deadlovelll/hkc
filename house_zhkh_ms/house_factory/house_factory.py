@@ -26,7 +26,7 @@ class HouseFactory:
             Dict[str, Any]: A structured representation of house information.
         """
 
-        result = {"house_id": None, "flats": {}}
+        result = {'house_id': None, 'flats': {}}
 
         for row in rows:
             (
@@ -36,11 +36,11 @@ class HouseFactory:
                 inhabitant_id, full_name, age, balance
             ) = row
 
-            if result["house_id"] is None:
-                result["house_id"] = house_id
+            if result['house_id'] is None:
+                result['house_id'] = house_id
 
-            if flat_number not in result["flats"]:
-                result["flats"][flat_number] = HouseFactory._create_flat (
+            if flat_number not in result['flats']:
+                result['flats'][flat_number] = HouseFactory._create_flat (
                     flat_id, 
                     flat_number, 
                     flat_floor, 
@@ -49,7 +49,7 @@ class HouseFactory:
                 )
 
             if counter_id:
-                result["flats"][flat_number]["counters"].append (
+                result['flats'][flat_number]['counters'].append (
                     HouseFactory._create_counter (
                         counter_id, 
                         counter_type, 
@@ -58,7 +58,7 @@ class HouseFactory:
                 )
 
             if counter_history_id:
-                result["flats"][flat_number]["counter_history"].append (
+                result['flats'][flat_number]['counter_history'].append (
                     HouseFactory._create_counter_history (
                         counter_history_id, 
                         counter_date, 
@@ -68,7 +68,7 @@ class HouseFactory:
 
             if inhabitant_id:
                 HouseFactory._add_inhabitant (
-                    result["flats"][flat_number]["inhabitants"], 
+                    result['flats'][flat_number]['inhabitants'], 
                     inhabitant_id, 
                     full_name, 
                     age,
@@ -100,14 +100,14 @@ class HouseFactory:
         """
         
         return {
-            "flat_id": flat_id,
-            "flat_number": flat_number,
-            "flat_floor": flat_floor,
-            "square": square,
-            "counters": [],
-            "counter_history": [],
-            "inhabitants": [],
-            "balance": balance,
+            'flat_id': flat_id,
+            'flat_number': flat_number,
+            'flat_floor': flat_floor,
+            'square': square,
+            'counters': [],
+            'counter_history': [],
+            'inhabitants': [],
+            'balance': balance,
         }
 
     @staticmethod
@@ -130,9 +130,9 @@ class HouseFactory:
         """
         
         return {
-            "id": counter_id, 
-            "counter_type": counter_type, 
-            "count": count
+            'id': counter_id, 
+            'counter_type': counter_type, 
+            'count': count
         }
 
     @staticmethod
@@ -155,9 +155,9 @@ class HouseFactory:
         """
         
         return {
-            "id": counter_history_id, 
-            "date": date, 
-            "count": count,
+            'id': counter_history_id, 
+            'date': date, 
+            'count': count,
         }
 
     @staticmethod
@@ -179,12 +179,12 @@ class HouseFactory:
         """
         
         if not any (
-            inhabitant["id"] == inhabitant_id for inhabitant in inhabitants
+            inhabitant['id'] == inhabitant_id for inhabitant in inhabitants
         ):
             inhabitants.append (
                 {
-                    "id": inhabitant_id,
-                    "full_name": full_name or f"Житель {inhabitant_id}",
-                    "age": age,
+                    'id': inhabitant_id,
+                    'full_name': full_name or f'Житель {inhabitant_id}',
+                    'age': age,
                 }
             )

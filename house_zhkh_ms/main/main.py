@@ -5,7 +5,7 @@ from config.config import Config
 
 app = create_app()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     uvicorn.run (
         app, 
         host=Config.HOST, 

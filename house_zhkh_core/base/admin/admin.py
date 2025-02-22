@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from base.models.building import Building
-from base.models.flat import Flat
 from base.models.counter import Counter, CounterHistory
+from base.models.flat import Flat
 from base.models.inhabitant import Inhabitant
 
 @admin.register(Building)

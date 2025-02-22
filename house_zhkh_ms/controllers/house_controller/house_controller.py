@@ -10,7 +10,7 @@ from psycopg2 import (
 )
 
 from controllers.base_controller.base_controller import BaseController  
-from house_factory.house_factory import HouseFactory  
+from house_zhkh_ms.house_factory.house_factory import HouseFactory  
 from modules.database.database_pool_controllers import DatabasePoolControllers  
 from modules.logger.logger import LoggerInitializer  
 

@@ -27,7 +27,7 @@ class TestHouseController(unittest.TestCase):
         self.controller.house_factory = MagicMock(spec=HouseFactory)
         self.controller.logger = MagicMock()
     
-    @patch("controllers.house_controller.house_controller.DatabasePoolControllers.get_connection")
+    @patch('controllers.house_controller.house_controller.DatabasePoolControllers.get_connection')
     def test_get_house_success (
         self, 
         mock_get_connection,
@@ -38,15 +38,15 @@ class TestHouseController(unittest.TestCase):
         mock_get_connection.return_value.__enter__.return_value = mock_conn
         mock_conn.cursor.return_value = mock_cursor
         
-        mock_cursor.fetchall.return_value = [(1, 2, "101", 2, 50.0, 3, "Electric", 100, 4, "2024-01-01", 99, 5, "John Doe", 30, 500.0)]
-        self.controller.house_factory.create_house.return_value = {"id": 1, "street": "Main St"}
+        mock_cursor.fetchall.return_value = [(1, 2, '101', 2, 50.0, 3, 'Electric', 100, 4, '2024-01-01', 99, 5, 'John Doe', 30, 500.0)]
+        self.controller.house_factory.create_house.return_value = {'id': 1, 'street': 'Main St'}
         
-        response = self.controller.get("Main St")
+        response = self.controller.get('Main St')
         self.assertIsInstance(response, JSONResponse)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.body, b'{"STATUS":"SUCCESS","HOUSE INFO":{"id":1,"street":"Main St"}}')
     
-    @patch("controllers.house_controller.house_controller.DatabasePoolControllers.get_connection")
+    @patch('controllers.house_controller.house_controller.DatabasePoolControllers.get_connection')
     def test_get_house_not_found (
         self, 
         mock_get_connection,
@@ -59,12 +59,12 @@ class TestHouseController(unittest.TestCase):
         
         mock_cursor.fetchall.return_value = []
         
-        response = self.controller.get("Unknown St")
+        response = self.controller.get('Unknown St')
         self.assertIsInstance(response, JSONResponse)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.body, b'{"STATUS":"FAILED","MESSAGE":"House not found"}')
     
-    @patch("controllers.house_controller.house_controller.DatabasePoolControllers.get_connection")
+    @patch('controllers.house_controller.house_controller.DatabasePoolControllers.get_connection')
     def test_create_house_success (
         self, 
         mock_get_connection,
@@ -77,20 +77,20 @@ class TestHouseController(unittest.TestCase):
         
         mock_cursor.fetchone.return_value = [1]
         
-        response = self.controller.create("New St")
+        response = self.controller.create('New St')
         self.assertIsInstance(response, JSONResponse)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.body, b'{"STATUS":"SUCCESS","HOUSE_ID":1}')
     
-    @patch("controllers.house_controller.house_controller.DatabasePoolControllers.get_connection")
+    @patch('controllers.house_controller.house_controller.DatabasePoolControllers.get_connection')
     def test_create_house_database_error (
         self, 
         mock_get_connection
     ) -> None:
         
-        mock_get_connection.side_effect = Exception("Database error")
+        mock_get_connection.side_effect = Exception('Database error')
         
-        response = self.controller.create("Error St")
+        response = self.controller.create('Error St')
         self.assertIsInstance(response, JSONResponse)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.body, b'{"STATUS":"FAILED","MESSAGE":"Internal Server Error"}')

@@ -1,6 +1,6 @@
 import os
 
-from typing import Any
+from typing import Any, Optional
 
 import psycopg2
 
@@ -19,9 +19,9 @@ class Database:
         pool (psycopg2.pool.SimpleConnectionPool, optional): The connection pool for PostgreSQL connections.
     """
 
-    instance = None
+    instance: Optional["Database"] = None
     
-    def __init__(
+    def __init__ (
         self,
     ) -> None:
         
@@ -43,7 +43,7 @@ class Database:
     
     def __new__ (
         cls,
-    ):
+    ) -> "Database":
         
         """
         Ensures that only one instance of the Database class is created (Singleton pattern).

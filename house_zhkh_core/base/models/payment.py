@@ -33,4 +33,4 @@ class Payment(models.Model):
             str: A formatted string displaying the apartment, month, and total fee.
         """
         
-        return f"Payment for {self.flat} ({self.month}): {self.total_fee}"
+        return f'Payment for {self.flat} ({self.month}): {self.total_fee}'

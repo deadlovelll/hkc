@@ -27,13 +27,15 @@ class Counter(models.Model):
             HEAT (3): Heat meter.
         """
         
-        GAS = 0, _("Gas Counter")
-        ELECTRICITY = 1, _("Electricity Counter")
-        WATER = 2, _("Water Counter")
-        HEAT = 3, _("Heat Counter")
+        GAS = 0, _('Gas Counter')
+        ELECTRICITY = 1, _('Electricity Counter')
+        WATER = 2, _('Water Counter')
+        HEAT = 3, _('Heat Counter')
 
     flat = models.ForeignKey (
-        Flat, on_delete=models.CASCADE, related_name="counters"
+        Flat, 
+        on_delete=models.CASCADE, 
+        related_name='counters',
     )
     counter_type = models.IntegerField(choices=CounterType.choices)
     last_reading = models.FloatField()
@@ -65,7 +67,9 @@ class CounterHistory(models.Model):
     """
 
     counter = models.ForeignKey (
-        Counter, on_delete=models.CASCADE, related_name="history"
+        Counter, 
+        on_delete=models.CASCADE, 
+        related_name='history',
     )
     date = models.DateField(auto_now_add=True)
     reading = models.FloatField()
@@ -81,4 +85,4 @@ class CounterHistory(models.Model):
             str: A formatted string indicating the counter and the recorded date.
         """
         
-        return f"History for {self.counter} on {self.date}"
+        return f'History for {self.counter} on {self.date}'

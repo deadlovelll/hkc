@@ -15,7 +15,7 @@ class Inhabitant(models.Model):
     """
 
     flat = models.ForeignKey (
-        Flat, on_delete=models.CASCADE, related_name="inhabitants"
+        Flat, on_delete=models.CASCADE, related_name='inhabitants'
     )
     full_name = models.CharField(max_length=200)
     age = models.PositiveIntegerField()
@@ -31,4 +31,4 @@ class Inhabitant(models.Model):
             str: A formatted string displaying the inhabitant's name and apartment.
         """
         
-        return f"{self.full_name} (Flat {self.flat.flat_number})"
+        return f'{self.full_name} (Flat {self.flat.flat_number})'

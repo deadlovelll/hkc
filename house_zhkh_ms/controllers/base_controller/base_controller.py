@@ -41,7 +41,7 @@ class BaseController(ABC):
         Update an existing resource. Override if update functionality is needed.
         """
         
-        raise NotImplementedError("Update operation is not implemented.")
+        raise NotImplementedError('Update operation is not implemented.')
 
     async def delete (
         self, 
@@ -52,4 +52,4 @@ class BaseController(ABC):
         Delete a resource. Override if delete functionality is needed.
         """
         
-        raise NotImplementedError("Delete operation is not implemented.")
+        raise NotImplementedError('Delete operation is not implemented.')

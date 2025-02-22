@@ -33,15 +33,15 @@ class CustomLogstashFormatter(Formatter):
         """
         
         log_record = {
-            "message": record.getMessage(),
-            "level": record.levelname,
-            "timestamp": self.formatTime(record, self.datefmt),
-            "host": socket.gethostname(),
-            "method": record.funcName,
-            "filename": record.filename,
-            "line_number": record.lineno,
+            'message': record.getMessage(),
+            'level': record.levelname,
+            'timestamp': self.formatTime(record, self.datefmt),
+            'host': socket.gethostname(),
+            'method': record.funcName,
+            'filename': record.filename,
+            'line_number': record.lineno,
         }
-        return json.dumps(log_record).encode("utf-8")
+        return json.dumps(log_record).encode('utf-8')
 
 
 class LoggerInitializer:
@@ -56,7 +56,7 @@ class LoggerInitializer:
 
     def __init__(
         self,
-        logger_name: str = "fastapi-logger",
+        logger_name: str = 'fastapi-logger',
         logstash_host: str = os.getenv('LOGSTASH_HOST'),
         logstash_port: int = os.getenv('LOGSTASH_PORT'),
         level: int = logging.INFO,

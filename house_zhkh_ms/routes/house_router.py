@@ -6,15 +6,15 @@ from controllers.house_controller.house_controller import HouseController
 from schemas.house_schema import HouseInfo, NewHouseRequest  
 
 router = APIRouter (
-    prefix="/houses",
-    tags=["Houses"]
+    prefix='/houses',
+    tags=['Houses']
 )
 
 @cbv(router)
 class HouseRouter:
     controller: HouseController = HouseController()
 
-    @router.get("/info", response_model=HouseInfo)
+    @router.get('/info', response_model=HouseInfo)
     async def get_house_info(
         self, 
         house_street: str,
@@ -34,11 +34,17 @@ class HouseRouter:
         """
         
         try:
-            return await self.controller.get(house_street)
+            return await self.controller.get (
+                house_street
+            )
+        
         except Exception as e:
-            raise HTTPException(status_code=400, detail=str(e))
+            raise HTTPException (
+                status_code=400, 
+                detail=str(e)
+            )
 
-    @router.post("/new", response_model=HouseInfo, status_code=201)
+    @router.post('/new', response_model=HouseInfo, status_code=201)
     async def add_new_house(
         self, 
         request: NewHouseRequest,
@@ -58,11 +64,17 @@ class HouseRouter:
         """
         
         try:
-            return await self.controller.create(request.dict())
+            return await self.controller.create (
+                request.dict()
+            )
+        
         except Exception as e:
-            raise HTTPException(status_code=400, detail=str(e))
+            raise HTTPException (
+                status_code=400, 
+                detail=str(e)
+            )
 
-    @router.post("/{house_id}/flats", status_code=501)
+    @router.post('/{house_id}/flats', status_code=501)
     async def add_new_flat(
         self, 
         house_id: int
@@ -77,4 +89,4 @@ class HouseRouter:
             dict: A message indicating that the functionality is not implemented.
         """
         
-        return {"message": "Not implemented"}
+        return {'message': 'Not implemented'}

@@ -29,4 +29,4 @@ class WaterMeter(models.Model):
             str: A formatted string with the reading, apartment, and month.
         """
         
-        return f"WaterMeter {self.reading} for {self.flat} ({self.month})"
+        return f'WaterMeter {self.reading} for {self.flat} ({self.month})'

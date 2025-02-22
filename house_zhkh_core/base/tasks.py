@@ -32,7 +32,7 @@ class CalculatePaymentsTask(Task):
         try:
             month_start = timezone.datetime.strptime(month, '%Y-%m-01')
         except ValueError as exc:
-            raise ValueError("Invalid month format. Expected 'YYYY-MM-01'.") from exc
+            raise ValueError('Invalid month format. Expected "YYYY-MM-01".') from exc
 
         month_end = month_start + timezone.timedelta(days=31)
         month_end = month_end.replace(day=1) - timezone.timedelta(days=1)

@@ -1,6 +1,6 @@
 import unittest
 
-from house_zhkh_ms.house_factory.house_factory import HouseFactory
+from house_factory.house_factory import HouseFactory
 
 class HouseFactoryTest(unittest.TestCase):
     

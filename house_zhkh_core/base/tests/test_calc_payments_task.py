@@ -71,7 +71,7 @@ class CalculatePaymentsTaskTest(TestCase):
         task = CalculatePaymentsTask()
         with self.assertRaises (
             ValueError, 
-            msg="Invalid month format. Expected 'YYYY-MM-01'.",
+            msg='Invalid month format. Expected "YYYY-MM-01".',
         ):
             task.run('invalid-date')
 

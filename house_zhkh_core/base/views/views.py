@@ -136,7 +136,7 @@ class CalculatePaymentsView(APIView):
             and an HTTP 202 Accepted status code.
         """
         
-        month: str = request.data.get("month")
+        month: str = request.data.get('month')
         task = CalculatePaymentsTask.delay(month)
         
         return Response (
@@ -180,14 +180,14 @@ class TaskStatusView(APIView):
         task_result = AsyncResult(task_id)
 
         response: Dict[str, Any] = {
-            "STATE": task_result.state,
-            "CURRENT": task_result.info.get("current", 0)
-            if task_result.state != "PENDING"
+            'STATE': task_result.state,
+            'CURRENT': task_result.info.get('current', 0)
+            if task_result.state != 'PENDING'
             else 0,
-            "TOTAL": task_result.info.get("total", 1)
-            if task_result.state != "PENDING"
+            'TOTAL': task_result.info.get('total', 1)
+            if task_result.state != 'PENDING'
             else 1,
-            "RESULT": task_result.result if task_result.state != "PENDING" else None,
+            'RESULT': task_result.result if task_result.state != 'PENDING' else None,
         }
 
         return Response(response)

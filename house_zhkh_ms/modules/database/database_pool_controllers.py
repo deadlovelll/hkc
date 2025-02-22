@@ -38,7 +38,7 @@ class DatabasePoolControllers:
         """
         
         if self.db is None:
-            self.db = Database()  # Instantiate Database when needed
+            self.db = Database()  
         return self.db
 
     async def startup_event (
@@ -62,7 +62,11 @@ class DatabasePoolControllers:
             self.logger.info('Database Pool Started Successfully')
 
         except Exception as e:
-            self.logger.fatal(f'Failed to start the database pool: {e}. Application would be stopped. Full traceback below.', exc_info=True)
+            self.logger.fatal (
+                f'Failed to close the database pool: {e}. 
+                Application would be stopped. Full traceback below.', 
+                exc_info=True
+            )
             raise e
 
     async def shutdown_event (
@@ -84,5 +88,9 @@ class DatabasePoolControllers:
                 self.db.close_all()
 
         except Exception as e:
-            self.logger.fatal(f'Failed to close the database pool: {e}. Application would be stopped. Full traceback below.', exc_info=True)
+            self.logger.fatal (
+                f'Failed to close the database pool: {e}. 
+                Application would be stopped. Full traceback below.', 
+                exc_info=True
+            )
             raise e

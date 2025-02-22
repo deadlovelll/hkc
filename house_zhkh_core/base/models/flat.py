@@ -16,7 +16,9 @@ class Flat(models.Model):
     """
 
     building = models.ForeignKey (
-        Building, on_delete=models.CASCADE, related_name="flats"
+        Building, 
+        on_delete=models.CASCADE, 
+        related_name='flats',
     )
     flat_number = models.PositiveIntegerField()
     flat_floor = models.PositiveIntegerField()
@@ -33,7 +35,7 @@ class Flat(models.Model):
             str: A formatted string displaying the flat number and building address.
         """
         
-        return f"Flat {self.flat_number}, {self.building.address}"
+        return f'Flat {self.flat_number}, {self.building.address}'
 
 
 class FlatHcsBalance(models.Model):
@@ -47,7 +49,7 @@ class FlatHcsBalance(models.Model):
     """
 
     flat = models.ForeignKey (
-        Flat, on_delete=models.CASCADE, related_name="balances"
+        Flat, on_delete=models.CASCADE, related_name='balances'
     )
     balance = models.IntegerField(default=0)
 
@@ -62,4 +64,4 @@ class FlatHcsBalance(models.Model):
             str: A formatted string displaying the balance for the given apartment.
         """
         
-        return f"Balance for {self.flat}: {self.balance}"
+        return f'Balance for {self.flat}: {self.balance}'
