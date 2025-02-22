@@ -34,7 +34,7 @@ class CalculatePaymentsTaskTest(TestCase):
             ) as mock_update_or_create, \
             patch (
                 'base.controller.payment_calculator.payment_calculator.PaymentCalculator', 
-                return_value=calculator_mock
+                return_value=calculator_mock,
             ):
             
             task = CalculatePaymentsTask()
