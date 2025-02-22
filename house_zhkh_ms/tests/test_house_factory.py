@@ -41,3 +41,7 @@ class HouseFactoryTest(unittest.TestCase):
             flat_b1['inhabitants'][0]['full_name'], 
             'Jane Doe'
         )
+        
+        
+if __name__ == "__main__":
+    unittest.main()
