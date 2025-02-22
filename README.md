@@ -189,5 +189,3 @@ bash tests/run_tests.sh
 
 ## 📜 License
 MIT License © 2025 Timofei Ivankov
-
-![Built with FastAPI](https://via.placeholder.com/800x200.png?text=Built+with+FastAPI)
