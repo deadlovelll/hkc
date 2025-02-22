@@ -1,7 +1,11 @@
-from django.test import TestCase
-from unittest.mock import patch, MagicMock
-from base.controllers.payment_controllers.payment_calculator.payment_calculator import PaymentCalculator
-from datetime import datetime
+from datetime import datetime  
+from unittest.mock import MagicMock, patch  
+
+from django.test import TestCase  
+
+from base.controllers.payment_controllers.payment_calculator.payment_calculator import (
+    PaymentCalculator,
+)
 
 class PaymentCalculatorTest(TestCase):
     

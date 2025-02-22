@@ -11,7 +11,6 @@ from base.tasks import CalculatePaymentsTask
 from base.controllers.payment_controllers.payment_processor.payment_processor import PaymentProcessor
 from base.models.payment import Payment
 
-
 class PaymentCalculationView(APIView):
     
     """

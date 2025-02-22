@@ -1,7 +1,9 @@
-from django.test import TestCase
-from unittest.mock import patch, MagicMock
-from rest_framework.test import APIClient
-from django.urls import reverse
+from django.test import TestCase  
+from django.urls import reverse  
+
+from rest_framework.test import APIClient  
+
+from unittest.mock import MagicMock, patch  
 
 class PaymentCalculationViewTest(TestCase):
     
