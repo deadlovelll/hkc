@@ -1,9 +1,10 @@
-import os
+import os  
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from config.config import Config
-from routes.house_router import router as house_router
+from fastapi import FastAPI  
+from fastapi.middleware.cors import CORSMiddleware  
+
+from config.config import Config  
+from routes.house_router import router as house_router  
 
 def create_app () -> FastAPI:
     

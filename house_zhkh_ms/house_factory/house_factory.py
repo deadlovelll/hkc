@@ -2,7 +2,7 @@ from typing import (
     Dict, 
     Any, 
     List, 
-    Tuple
+    Tuple,
 )
 
 class HouseFactory:

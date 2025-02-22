@@ -1,12 +1,11 @@
-import os
+import json  
+import logging  
+import os  
+import socket  
 
-import json
-import logging
-import socket
-from logging import Logger, LogRecord, Formatter
+from logging import Formatter, Logger, LogRecord  
 
-import logstash
-
+import logstash  
 
 class CustomLogstashFormatter(Formatter):
     

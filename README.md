@@ -175,10 +175,6 @@ curl -X POST "http://localhost:8000/payments/calculate" -H "accept: application/
 
 ## 🛠 Run Tests
 ```bash
-# Run tests
-python3 -m venv venv
-source venv/bin/activate
-
 cd tests
 
 bash tests/run_tests.sh
