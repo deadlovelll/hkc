@@ -77,7 +77,7 @@ class PaymentCalculationView(APIView):
         if not month:
             return Response (
                 {
-                    'ERROR': 'Month is required'
+                    'ERROR': 'Month is required',
                 },
                 status=status.HTTP_400_BAD_REQUEST,
             )
@@ -103,7 +103,7 @@ class PaymentCalculationView(APIView):
         except Exception as e:
             return Response (
                 {
-                    'ERROR': str(e)
+                    'ERROR': str(e),
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
@@ -141,9 +141,9 @@ class CalculatePaymentsView(APIView):
         
         return Response (
             {
-                'TASK_ID': task.id
+                'TASK_ID': task.id,
             }, 
-            status=status.HTTP_202_ACCEPTED
+            status=status.HTTP_202_ACCEPTED,
         )
 
 

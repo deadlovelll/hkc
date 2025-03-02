@@ -16,7 +16,10 @@ class Payment(models.Model):
         total_fee (float): The total amount due, including all fees.
     """
 
-    flat = models.ForeignKey(Flat, on_delete=models.CASCADE)
+    flat = models.ForeignKey (
+        Flat, 
+        on_delete=models.CASCADE,
+    )
     month = models.DateField()
     water_fee = models.FloatField()
     common_area_fee = models.FloatField()

@@ -14,7 +14,10 @@ class WaterMeter(models.Model):
         month (date): The month for which the reading is recorded.
     """
 
-    flat = models.ForeignKey(Flat, on_delete=models.CASCADE)
+    flat = models.ForeignKey (
+        Flat, 
+        on_delete=models.CASCADE,
+    )
     reading = models.FloatField()
     month = models.DateField()
 

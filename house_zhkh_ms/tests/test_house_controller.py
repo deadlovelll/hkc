@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from fastapi.responses import JSONResponse
 
 from controllers.house_controller.house_controller import HouseController
-from modules.database.database_pool_controllers import DatabasePoolControllers
+from house_zhkh_ms.modules.database.database_pool.database_pool_controllers import DatabasePoolControllers
 from house_factory.house_factory import HouseFactory
 
 class TestHouseController(unittest.TestCase):

@@ -19,7 +19,7 @@ class Database:
         pool (psycopg2.pool.SimpleConnectionPool, optional): The connection pool for PostgreSQL connections.
     """
 
-    instance: Optional["Database"] = None
+    instance: Optional['Database'] = None
     
     def __init__ (
         self,
